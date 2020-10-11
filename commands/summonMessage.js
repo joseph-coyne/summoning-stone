@@ -5,8 +5,8 @@ module.exports = {
 	execute(summon) {
 		console.log('Summoning Stone online...');
 		//Update member list
-		delete require.cache[require.resolve('../members.json')];
-		const allMembers = require('../members.json');
+		delete require.cache[require.resolve('../db/members.json')];
+		const allMembers = require('../db/members.json');
 		const members = allMembers.members;
 		//Initial Reactions
 		summon.send('React to Summon').then((message) => {

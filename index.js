@@ -13,11 +13,11 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-const allMembers = require('./members.json');
+const allMembers = require('./db/members.json');
 const members = allMembers.members;
 
 // Channel IDs for quick switching
-const channels = require('./channels.json');
+const channels = require('./db/channels.json');
 
 //Initiate bot
 client.on('ready', () => {
@@ -33,11 +33,11 @@ client.on('messageReactionAdd', (reaction, user) => {
 	if (user.bot) return;
 
 	//Only checks for human reacts in these channels
-	if (channel.id == summonID) {
+	if (channel.id == channels.summon) {
 		client.commands.get('summonMember').execute(reaction, user, members);
 	}
 	//Mod channel acceptance/rejection
-	if (channel.id == mod) {
+	if (channel.id == channels.mod) {
 		client.commands.get('modReview').execute(reaction);
 	}
 });

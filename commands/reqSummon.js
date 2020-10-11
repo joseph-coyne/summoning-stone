@@ -45,13 +45,13 @@ module.exports = {
 
 			//Checks if emoji is already assigned to a user
 			if (!emojiExists()) {
-				var data = fs.readFileSync('./pending-members.json');
+				var data = fs.readFileSync('db/pending-members.json');
 				var json = JSON.parse(data);
 				json.newMembers.push(newMember);
 				var newMembers = { newMembers: json.newMembers };
 
 				fs.writeFile(
-					'pending-members.json',
+					'db/pending-members.json',
 					JSON.stringify(newMembers, null, 2),
 					(err) => {
 						if (err) throw err;

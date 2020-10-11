@@ -3,7 +3,7 @@ module.exports = {
 	name: 'reqEmoji',
 	description: 'Requests for a custom emoji to be added to the server.',
 	execute(msg, members, mod) {
-		delete require.cache[require.resolve('../pending-emoji.json')];
+		delete require.cache[require.resolve('../db/pending-emoji.json')];
 		var emojiList = msg.channel.guild.emojis.cache;
 		var command = msg.content.replace(/ +(?= )/g, '');
 		command = command.split(' ');
@@ -36,7 +36,7 @@ module.exports = {
 					`An emoji with the name "${newEmoji.name}" already exists. Please choose a different name.`
 				);
 			} else {
-				fs.readFile('./pending-emoji.json', (err, data) => {
+				fs.readFile('pending-emoji.json', (err, data) => {
 					var json = JSON.parse(data);
 					json.newEmoji.push(newEmoji);
 					var pendingEmoji = { newEmoji: json.newEmoji };
