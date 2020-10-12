@@ -27,7 +27,6 @@ client.on('ready', () => {
 });
 //Listen for reactions
 client.on('messageReactionAdd', (reaction, user) => {
-	var mod = client.channels.cache.get(channels.mod);
 	var channel = reaction.message.channel;
 
 	if (user.bot) return;
@@ -66,7 +65,7 @@ client.on('message', (msg) => {
 				client.commands.get('help').execute(msg);
 				break;
 			case 'clear':
-				client.commands.get('clearChannel').execute(msg);
+				client.commands.get('clearChannel').execute(msg.channel);
 				break;
 			case 'addsummon':
 				client.commands.get('reqSummon').execute(msg, members, mod);
