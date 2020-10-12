@@ -3,7 +3,9 @@
 
 # Summoning Stone
 
-A Discord bot that hosts a single post for sending mentions to a whitelisted group of members + minor server management.
+A Discord bot created with Node and the Discord API. 
+
+Hosts a single post for sending mentions to a whitelisted group of members + minor server management.
 </td></tr></table>
 
 ## Usage
