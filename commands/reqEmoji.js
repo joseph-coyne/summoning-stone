@@ -36,19 +36,18 @@ module.exports = {
 					`An emoji with the name "${newEmoji.name}" already exists. Please choose a different name.`
 				);
 			} else {
-				fs.readFile('pending-emoji.json', (err, data) => {
+					var data = fs.readFileSync('db/pending-emoji.json');
 					var json = JSON.parse(data);
 					json.newEmoji.push(newEmoji);
 					var pendingEmoji = { newEmoji: json.newEmoji };
 
 					fs.writeFile(
-						'pending-emoji.json',
+						'db/pending-emoji.json',
 						JSON.stringify(pendingEmoji, null, 2),
 						(err) => {
 							if (err) throw err;
 						}
 					);
-				});
 				msg.reply('Submitted for approval.');
 				mod.send(
 					`!Approval Needed: ${newEmoji.id} \n${msg.author.username} would like to add a custom emoji, ${newEmoji.name}, of this image ${newEmoji.url}`
