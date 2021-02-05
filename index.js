@@ -44,6 +44,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 client.on('message', (msg) => {
 	var summon = client.channels.cache.get(channels.summon);
 	var mod = client.channels.cache.get(channels.mod);
+	var cracks = client.channels.cache.get(channels.cracks);
 	var userID = msg.author.id;
 
 	//Delete a summon if the user sends a message
@@ -58,6 +59,7 @@ client.on('message', (msg) => {
 	const args = msg.content.slice(prefix.length).trim().split(/ +/);
 	const command = args.shift();
 	//Global Commands
+
 	if (!msg.author.bot) {
 		switch (command) {
 			case 'help':
@@ -79,29 +81,37 @@ client.on('message', (msg) => {
 		// if(msg.content.startsWith(prefix + command)) client.commands.get(command).execute(msg, members, mod);
 	}
 	//Mod Channel Commands
-	if (msg.channel.id == mod && msg.author.bot) {
-		pend = args.toString();
+	if (msg.channel.id == mod) {
+		if (msg.author.bot) {
+			pend = args.toString();
 
-		switch (
-			command //If a command needs approval, create reactions for easy approval
-		) {
-			case 'Approval':
-				msg.react('👍').then(() => msg.react('👎'));
-				break;
-			case 'Approved':
-				if (pend.endsWith('S')) {
-					//Add user to Summoning Stone
-					client.commands.get('addSummon').execute(args);
-					client.commands.get('clearChannel').execute(summon);
-					client.commands.get('summonMessage').execute(summon);
-				} else if (pend.endsWith('E')) {
-					//Add custom emoji
-					client.commands.get('addEmoji').execute(msg, args);
-				}
-				break;
-			case 'Rejected':
-				console.log('Request rejected.');
-				break;
+			switch (
+				command //If a command needs approval, create reactions for easy approval
+			) {
+				case 'Approval':
+					msg.react('👍').then(() => msg.react('👎'));
+					break;
+				case 'Approved':
+					if (pend.endsWith('S')) {
+						//Add user to Summoning Stone
+						client.commands.get('addSummon').execute(args);
+						client.commands.get('clearChannel').execute(summon);
+						client.commands.get('summonMessage').execute(summon);
+					} else if (pend.endsWith('E')) {
+						//Add custom emojin(msg, args);
+					}
+					break;
+				case 'Rejected':
+					console.log('Request rejected.');
+					break;
+			}
+		} else {
+			switch (command) {
+				case 'crack':
+					console.log('crack');
+					client.commands.get('embedLink').execute(msg, cracks);
+					break;
+			}
 		}
 	}
 });
